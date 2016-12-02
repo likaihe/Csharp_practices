@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//Using delegates in callbacks means that the source of the notifications doesn’t need to know
+//anything about the class that receives them, allowing the notification receiver to be refactored or
+//replaced without the source having to be modified at all.
 namespace DelegatesCallBacks
 {
     //Defining a Delegate Type
@@ -20,6 +24,7 @@ namespace DelegatesCallBacks
             calcListener = listener;
         }
 
+        //The delegate is called each time the method is invoked
         public int CalculateProduct(int num1, int num2)
         {
             // perform the calculation
@@ -36,6 +41,11 @@ namespace DelegatesCallBacks
     {
         public static void CalculationPrinter(int x, int y, int result)
         {
+            Console.WriteLine("Calculation Notification: {0} * {1} = {2}",
+            x, y, result);
+        }
+        public static void CalculationPrinter2(int x, int y, int result)
+        {
             Console.WriteLine("Calculation Notification: {0} + {1} = {2}",
             x, y, result);
         }
@@ -46,7 +56,7 @@ namespace DelegatesCallBacks
         static void Main(string[] args)
         {
             // create a new Calculator, passing in the printer method
-            Calculator calc = new Calculator(CalculationListener.CalculationPrinter);
+            Calculator calc = new Calculator(CalculationListener.CalculationPrinter2);
             // perform some calculations
             calc.CalculateProduct(10, 20);
             calc.CalculateProduct(2, 3);
